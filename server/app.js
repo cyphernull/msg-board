@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const PouchDB = require('pouchdb')
+const moment = require('moment')
 const app = express()
 app.use(cors())
 app.use(bodyParser.json())
@@ -10,15 +11,6 @@ app.use(
     extended: false
   })
 )
-app.post('/db', (req, res) => {
-  console.log(req.body)
-  res.send('hi')
-})
-
-const port = 3030
-const server = app.listen(port, function() {
-  console.log('Listening at', port)
-})
 
 const db = new PouchDB('http://localhost:5984/msg', {
   auth: {
@@ -26,6 +18,31 @@ const db = new PouchDB('http://localhost:5984/msg', {
     password: '112358'
   }
 })
+const doc = {
+  _id: 'messages',
+  messages: []
+}
+
+db.put(doc).then(
+  res => {
+    console.log(res)
+  },
+  err => {
+    console.log(err)
+  }
+)
+const comment = {
+  _id: 'comment',
+  comments: []
+}
+db.put(comment).then(
+  res => {
+    console.log(res)
+  },
+  err => {
+    console.log(err)
+  }
+)
 db.info().then(
   function(info) {
     console.log(info)
@@ -34,6 +51,87 @@ db.info().then(
     console.log(err)
   }
 )
+
+app.post('/addlist', (req, res) => {
+  const data = req.body
+  db
+    .get('messages')
+    .then(function(doc) {
+      doc.messages.push({
+        time: data.time,
+        email: data.email,
+        text: data.text,
+        timestamp: data.timestamp,
+        uuid: data.uuid
+      })
+      db.put(doc)
+    })
+    .then(function(response) {
+      // handle response
+    })
+    .catch(function(err) {
+      console.log(err)
+    })
+  res.send(data)
+})
+
+app.post('/addcomment', (req, res) => {
+  const data = req.body
+  console.log(data)
+  db
+    .get('comment')
+    .then(function(doc) {
+      console.log(doc.comments)
+      doc.comments.push({
+        time: data.time,
+        from: data.from,
+        to: data.to,
+        text: data.text,
+        timestamp: data.timestamp,
+        uuid: data.uuid
+      })
+      db.put(doc)
+    })
+    .then(function(response) {
+      // handle response
+    })
+    .catch(function(err) {
+      console.log(err)
+    })
+  res.send(data)
+})
+
+app.get('/getlist', (req, resp) => {
+  console.log(req.body)
+  db
+    .get('messages')
+    .then(function(doc) {
+      console.log(doc)
+      resp.send(doc.messages)
+    })
+    .catch(function(err) {
+      console.log(err)
+    })
+})
+
+app.get('/getcomments', (req, resp) => {
+  console.log(req.body)
+  db
+    .get('comment')
+    .then(function(doc) {
+      console.log(doc)
+      resp.send(doc.comments)
+    })
+    .catch(function(err) {
+      console.log(err)
+    })
+})
+
+const port = 3030
+const server = app.listen(port, function() {
+  console.log('Listening at', port)
+})
+
 // const doc = {
 //   _id: 'mittens',
 //   name: 'Mittens',

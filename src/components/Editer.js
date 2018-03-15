@@ -1,29 +1,35 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Card, CardHeader, CardActions } from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 import MD5 from 'crypto-js/md5'
+import { addMsg, updateUser } from '../actions/messages'
+import moment from 'moment'
+import uuid from 'uuid/v1'
 class Editer extends Component {
   constructor(props) {
     super(props)
     this.state = {
       email: '',
       open: false,
-      time: this.getTime(),
+      time: moment().format('HH:mm'),
       isValid: false,
-      textMsg: ''
+      text: ''
     }
   }
   componentDidMount() {
+    // eslint-disable-next-line
+    localStorage.getItem('email') !== null
+      ? this.setState({ email: localStorage.getItem('email'), isValid: true }, () => {
+          this.props.dispatch(updateUser(this.state))
+        })
+      : null
     setInterval(() => {
-      this.setState({ time: this.getTime() })
+      this.setState({ time: moment().format('HH:mm') })
     }, 1000)
-  }
-  getTime = () => {
-    const date = new Date()
-    return date.getHours() + ':' + date.getMinutes()
   }
   handleClick = () => {
     this.state.email === '' ? this.setState({ open: true }) : this.handleMessage()
@@ -32,32 +38,39 @@ class Editer extends Component {
     this.setState({ open: false, email: '' })
   }
   handleEmail = () => {
-    this.setState({ open: false })
+    this.setState({ open: false }, () => {
+      this.props.dispatch(updateUser(this.state))
+    })
   }
   handleChange = e => {
     // eslint-disable-next-line
     const reg = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g
     reg.test(e.target.value)
-      ? this.setState({ email: e.target.value, isValid: true })
+      ? this.setState({ email: e.target.value, isValid: true }, () => {
+          localStorage.setItem('email', this.state.email)
+        })
       : this.setState({ isValid: false })
   }
   handleTextChange = e => {
-    this.setState({ textMsg: e.target.value })
+    this.setState({ text: e.target.value })
   }
   handleMessage = () => {
-    fetch('http://127.0.0.1:3030/db', {
+    fetch('http://127.0.0.1:3030/addlist', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'POST',
-      body: JSON.stringify({ ...this.state }),
+      body: JSON.stringify({ ...this.state, timestamp: moment().format('X'), uuid: uuid() }),
       mode: 'cors'
     })
-      .then(res => res.text())
+      .then(res => res.json())
       .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response))
-    this.setState({ textMsg: '' })
+      .then(response => {
+        console.log('Success')
+        this.props.dispatch(addMsg(response))
+        this.setState({ text: '' })
+      })
   }
   render() {
     const actions = [
@@ -82,7 +95,7 @@ class Editer extends Component {
               floatingLabelText="留言消息"
               fullWidth={true}
               onChange={this.handleTextChange}
-              value={this.state.textMsg}
+              value={this.state.text}
             />
             <RaisedButton
               label={this.state.email === '' ? '填写邮箱后留言' : '留言'}
@@ -95,4 +108,9 @@ class Editer extends Component {
     )
   }
 }
-export default Editer
+const mapSateToProps = (state, props) => {
+  return {
+    messages: state.messages
+  }
+}
+export default connect(mapSateToProps)(Editer)

@@ -2,7 +2,27 @@ import React, { Component } from 'react'
 import Topbar from './Topbar'
 import Editer from './Editer'
 import MsgList from './MsgList'
+import { addComment } from '../actions/messages'
+import { connect } from 'react-redux'
 class MainPage extends Component {
+  componentDidMount() {
+    fetch('http://127.0.0.1:3030/getcomments', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'get',
+      mode: 'cors'
+    })
+      .then(res => res.text())
+      .catch(error => console.error('Error:', error))
+      .then(response => {
+        const mesJson = JSON.parse(response)
+        mesJson.forEach(each => {
+          this.props.dispatch(addComment(each))
+        })
+      })
+  }
   render() {
     return (
       <div>
@@ -14,5 +34,4 @@ class MainPage extends Component {
     )
   }
 }
-
-export default MainPage
+export default connect()(MainPage)

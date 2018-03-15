@@ -17,6 +17,9 @@ body {
   margin-left: 10px;
   margin-right: 10px;
 }
+.card-action {
+  text-align: right;
+}
 .msg-list:last-child {
   margin-bottom: 10px;
 }

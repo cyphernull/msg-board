@@ -1,23 +1,42 @@
 import React, { Component } from 'react'
 import { Card, CardHeader, CardActions, CardText } from 'material-ui/Card'
+import { connect } from 'react-redux'
+import FlatButton from 'material-ui/FlatButton'
 import MD5 from 'crypto-js/md5'
+import CommentList from './CommentList'
 class Message extends Component {
-  constructor(props) {
-    super(props)
+  handleClick = () => {
+    this.props.handleComment(this.props)
   }
   render() {
     return (
       <Card className="card">
         <CardHeader
-          avatar={'https://www.gravatar.com/avatar/' + MD5('sdfsd')}
-          title="eric"
-          subtitle="eric"
+          avatar={'https://www.gravatar.com/avatar/' + MD5(this.props.email)}
+          title={this.props.email}
+          subtitle={this.props.time}
           className="editer-header"
         />
-        <CardText>{this.props.msg}</CardText>
+        <CardText>{this.props.message}</CardText>
+        <CardActions className="card-action">
+          <FlatButton
+            label="回复"
+            primary={true}
+            disabled={this.props.user[0] === undefined}
+            onClick={this.handleClick}
+          />
+        </CardActions>
+        <hr style={{ height: '1px', border: 'none', borderTop: '1px dashed #b5b5b5', margin: '0px 10px' }} />
+        <CardText>
+          <CommentList origin={this.props.uuid} />
+        </CardText>
       </Card>
     )
   }
 }
-
-export default Message
+const mapSateToProps = (state, props) => {
+  return {
+    user: state.user
+  }
+}
+export default connect(mapSateToProps)(Message)

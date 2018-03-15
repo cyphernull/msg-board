@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import AppBar from 'material-ui/AppBar'
-import Avatar from 'material-ui/Avatar'
-import MD5 from 'crypto-js/md5'
+import IconButton from 'material-ui/IconButton'
+import IconMenu from 'material-ui/IconMenu'
+import MenuItem from 'material-ui/MenuItem'
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import { fullWhite } from 'material-ui/styles/colors'
+import { connect } from 'react-redux'
 class Topbar extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      emailAddress: ''
-    }
+  handleLogout = () => {
+    localStorage.removeItem('email')
+    window.location.reload()
   }
   render() {
     return (
@@ -16,12 +18,28 @@ class Topbar extends Component {
           title="留言板"
           showMenuIconButton={false}
           iconElementRight={
-            <Avatar size={48} src={'https://www.gravatar.com/avatar/' + MD5('eric.choo1997@yahoo.com')} />
+            this.props.user[0] === undefined ? null : (
+              <IconMenu
+                iconButtonElement={
+                  <IconButton>
+                    <MoreVertIcon color={fullWhite} />
+                  </IconButton>
+                }
+                targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+              >
+                <MenuItem primaryText="退出" onClick={this.handleLogout} />
+              </IconMenu>
+            )
           }
         />
       </div>
     )
   }
 }
-
-export default Topbar
+const mapSateToProps = (state, props) => {
+  return {
+    user: state.user
+  }
+}
+export default connect(mapSateToProps)(Topbar)
