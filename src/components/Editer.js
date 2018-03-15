@@ -1,0 +1,98 @@
+import React, { Component } from 'react'
+import { Card, CardHeader, CardActions } from 'material-ui/Card'
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
+import Dialog from 'material-ui/Dialog'
+import MD5 from 'crypto-js/md5'
+class Editer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: '',
+      open: false,
+      time: this.getTime(),
+      isValid: false,
+      textMsg: ''
+    }
+  }
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({ time: this.getTime() })
+    }, 1000)
+  }
+  getTime = () => {
+    const date = new Date()
+    return date.getHours() + ':' + date.getMinutes()
+  }
+  handleClick = () => {
+    this.state.email === '' ? this.setState({ open: true }) : this.handleMessage()
+  }
+  handleClose = () => {
+    this.setState({ open: false, email: '' })
+  }
+  handleEmail = () => {
+    this.setState({ open: false })
+  }
+  handleChange = e => {
+    // eslint-disable-next-line
+    const reg = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g
+    reg.test(e.target.value)
+      ? this.setState({ email: e.target.value, isValid: true })
+      : this.setState({ isValid: false })
+  }
+  handleTextChange = e => {
+    this.setState({ textMsg: e.target.value })
+  }
+  handleMessage = () => {
+    fetch('http://127.0.0.1:3030/db', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({ ...this.state }),
+      mode: 'cors'
+    })
+      .then(res => res.text())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response))
+    this.setState({ textMsg: '' })
+  }
+  render() {
+    const actions = [
+      <FlatButton label="取消" secondary={true} onClick={this.handleClose} />,
+      <FlatButton label="确认" primary={true} disabled={!this.state.isValid} onClick={this.handleEmail} />
+    ]
+    return (
+      <div className="editer">
+        <Dialog title="请输入邮箱地址" modal={true} actions={actions} open={this.state.open}>
+          <TextField floatingLabelText="email" type={'email'} fullWidth={true} onChange={this.handleChange} />
+        </Dialog>
+        <Card>
+          <CardHeader
+            avatar={'https://www.gravatar.com/avatar/' + MD5(this.state.email)}
+            title={this.state.email}
+            subtitle={this.state.time}
+            className="editer-header"
+          />
+          <CardActions>
+            <TextField
+              hintText=". . ."
+              floatingLabelText="留言消息"
+              fullWidth={true}
+              onChange={this.handleTextChange}
+              value={this.state.textMsg}
+            />
+            <RaisedButton
+              label={this.state.email === '' ? '填写邮箱后留言' : '留言'}
+              primary={true}
+              onClick={this.handleClick}
+            />
+          </CardActions>
+        </Card>
+      </div>
+    )
+  }
+}
+export default Editer

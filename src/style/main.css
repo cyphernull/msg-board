@@ -1,0 +1,22 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+.editer {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: right;
+}
+.editer-header {
+  text-align: left;
+}
+.card {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.msg-list:last-child {
+  margin-bottom: 10px;
+}
