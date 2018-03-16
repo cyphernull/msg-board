@@ -12,12 +12,7 @@ app.use(
   })
 )
 
-const db = new PouchDB('http://localhost:5984/msg', {
-  auth: {
-    username: 'root',
-    password: '112358'
-  }
-})
+const db = new PouchDB('http://139.199.188.225:5984/msg')
 const doc = {
   _id: 'messages',
   messages: []
