@@ -58,9 +58,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "static": "node scripts/start.js &",
-    "server": "node server/app.js &",
-    "start": "yarn run server && yarn run static",
+    "start": "node scripts/start.js && node server/app.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
