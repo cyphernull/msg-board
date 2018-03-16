@@ -19,12 +19,11 @@ class Topbar extends Component {
     return (
       <div>
         <AppBar
-          title="·留言板"
+          title="留言板"
           showMenuIconButton={false}
           iconElementRight={
             /* istanbul ignore next */
-            this.props.user[0] === undefined /* istanbul ignore next */ ? /* istanbul ignore next */
-            null : (
+            this.props.user[0] === undefined /* istanbul ignore next */ /* istanbul ignore next */ ? null : (
               /* istanbul ignore next */
 
               /* istanbul ignore next */
