@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import App from './App'
-import configureStore from './store/configureStore'
+import MainPage from './MainPage'
+import configureStore from '../store/configureStore'
 const store = configureStore()
 it('renders without crashing', () => {
-  shallow(<App store={store} />)
+  shallow(<MainPage store={store} />)
 })
