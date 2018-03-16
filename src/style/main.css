@@ -23,3 +23,6 @@ body {
 .msg-list:last-child {
   margin-bottom: 10px;
 }
+.comment-list {
+  border-top: 1px dashed #b5b5b5;
+}

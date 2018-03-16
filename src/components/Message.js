@@ -26,7 +26,6 @@ class Message extends Component {
             onClick={this.handleClick}
           />
         </CardActions>
-        <hr style={{ height: '1px', border: 'none', borderTop: '1px dashed #b5b5b5', margin: '0px 10px' }} />
         <CardText>
           <CommentList origin={this.props.uuid} />
         </CardText>

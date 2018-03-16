@@ -4,7 +4,7 @@ import Comment from './Comment'
 class CommentList extends Component {
   render() {
     return (
-      <div>
+      <div className="comment-list">
         {this.props.comments
           .sort((a, b) => {
             return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
