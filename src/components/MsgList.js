@@ -19,7 +19,7 @@ class MsgList extends Component {
     }
   }
   componentDidMount() {
-    fetch('http://127.0.0.1:3030/getlist', {
+    fetch('https://localhost:3030/getlist', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ class MsgList extends Component {
   }
   handlePostComment = () => {
     /* istanbul ignore next */
-    fetch('http://127.0.0.1:3030/addcomment', {
+    fetch('https://localhost:3030/addcomment', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
