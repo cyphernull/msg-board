@@ -21,6 +21,7 @@ class Message extends Component {
         <CardActions className="card-action">
           <FlatButton
             label="回复"
+            className="card-action-btn"
             primary={true}
             disabled={this.props.user[0] === undefined}
             onClick={this.handleClick}
@@ -33,9 +34,10 @@ class Message extends Component {
     )
   }
 }
-const mapSateToProps = (state, props) => {
+export const mapSateToProps = (state, props) => {
   return {
     user: state.user
   }
 }
 export default connect(mapSateToProps)(Message)
+export { Message }

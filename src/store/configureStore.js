@@ -9,6 +9,7 @@ export default () => {
       user: userReducer,
       comments: commentsReducer
     }),
+    /* istanbul ignore next */
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
   return store

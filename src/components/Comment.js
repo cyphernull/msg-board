@@ -21,3 +21,4 @@ class Comment extends Component {
 }
 
 export default Comment
+export { Comment as Comment2 }

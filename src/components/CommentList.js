@@ -26,3 +26,4 @@ const mapSateToProps = (state, props) => {
   }
 }
 export default connect(mapSateToProps)(CommentList)
+export { CommentList as CommentList2 }

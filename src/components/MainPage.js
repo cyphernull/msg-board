@@ -15,7 +15,7 @@ class MainPage extends Component {
       mode: 'cors'
     })
       .then(res => res.text())
-      .catch(error => console.error('Error:', error))
+
       .then(response => {
         const mesJson = JSON.parse(response)
         mesJson.forEach(each => {
@@ -35,3 +35,4 @@ class MainPage extends Component {
   }
 }
 export default connect()(MainPage)
+export { MainPage as MainPage2 }
