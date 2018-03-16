@@ -19,7 +19,7 @@ class MsgList extends Component {
     }
   }
   componentDidMount() {
-    fetch('https://localhost:3030/getlist', {
+    fetch('https://stormy-island-87549.herokuapp.com:3030/getlist', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ class MsgList extends Component {
   }
   handlePostComment = () => {
     /* istanbul ignore next */
-    fetch('https://localhost:3030/addcomment', {
+    fetch('https://stormy-island-87549.herokuapp.com:3030/addcomment', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'

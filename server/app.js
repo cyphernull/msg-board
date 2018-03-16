@@ -4,18 +4,21 @@ const bodyParser = require('body-parser')
 const PouchDB = require('pouchdb')
 const moment = require('moment')
 const https = require('https')
-const fs = require('fs')
-const path = require('path')
-const options = {
-  key: fs.readFileSync(path.resolve('./server/localhost.key')),
-  cert: fs.readFileSync(path.resolve('./server/localhost.cert'))
-}
+// const fs = require('fs')
+// const path = require('path')
+// const options = {
+//   key: fs.readFileSync(path.resolve('./server/localhost.key')),
+//   cert: fs.readFileSync(path.resolve('./server/localhost.cert'))
+// }
 const app = express()
 const port = 3030
-const server = https.createServer(options, app)
-server.listen(port, function() {
-  console.log('Express server listening on port ' + server.address().port)
+const server = app.listen(port, function() {
+  console.log('Listening at', port)
 })
+// const server = https.createServer(options, app)
+// server.listen(port, function() {
+//   console.log('Express server listening on port ' + server.address().port)
+// })
 app.use(cors())
 app.use(bodyParser.json())
 app.use(
@@ -133,10 +136,6 @@ app.get('/getcomments', (req, resp) => {
       console.log(err)
     })
 })
-
-// const server = app.listen(port, function() {
-//   console.log('Listening at', port)
-// })
 
 // const doc = {
 //   _id: 'mittens',

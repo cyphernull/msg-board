@@ -66,7 +66,7 @@ class Editer extends Component {
     this.setState({ text: e.target.value })
   }
   handleMessage = () => {
-    fetch('https://localhost:3030/addlist', {
+    fetch('https://stormy-island-87549.herokuapp.com:3030/addlist', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
