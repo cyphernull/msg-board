@@ -65,7 +65,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "concurrently \" node scripts/start.js \" node server/app.js",
+    "start": "concurrently  \"node server/app.js arg\" \"node scripts/start.js arg\"",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom --no-cache"
   },
