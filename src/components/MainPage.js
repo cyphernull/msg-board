@@ -6,7 +6,7 @@ import { addComment } from '../actions/messages'
 import { connect } from 'react-redux'
 class MainPage extends Component {
   componentDidMount() {
-    fetch('http://localhost:3030/getcomments', {
+    fetch('http://139.199.188.225:3030/getcomments', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
