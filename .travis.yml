@@ -8,4 +8,4 @@ script:
   - yarn build
   - yarn test
 after_success:
-  -ssh ubuntu@139.199.188.225 -p 37DsHEabTaAQt5 'cd /msg-board && sudo git pull && yarn start'
+  -ssh root@139.199.188.225 -p 22 'cd /msg-board && sudo git pull && yarn start'
