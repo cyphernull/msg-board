@@ -3,7 +3,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const PouchDB = require('pouchdb')
 const moment = require('moment')
-const https = require('https')
+// const https = require('https')
 // const fs = require('fs')
 // const path = require('path')
 // const options = {
@@ -27,7 +27,7 @@ app.use(
   })
 )
 
-const db = new PouchDB('http://139.199.188.225:5984/msg')
+const db = new PouchDB('https://www.ericchoo.cn:6984/msg')
 const doc = {
   _id: 'messages',
   messages: []
