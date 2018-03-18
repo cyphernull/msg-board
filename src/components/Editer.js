@@ -66,7 +66,7 @@ class Editer extends Component {
     this.setState({ text: e.target.value })
   }
   handleMessage = () => {
-    fetch('http://139.199.188.225:3030/addlist', {
+    fetch('https://www.ericchoo.cn:3000/addlist', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'

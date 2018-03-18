@@ -11,7 +11,7 @@ const moment = require('moment')
 //   cert: fs.readFileSync(path.resolve('./server/localhost.cert'))
 // }
 const app = express()
-const port = 3030
+const port = 3000
 const server = app.listen(port, function() {
   console.log('Listening at', port)
 })
@@ -26,7 +26,7 @@ app.use(
     extended: false
   })
 )
-
+app.use(express.static('../build'))
 const db = new PouchDB('https://www.ericchoo.cn:6984/msg')
 const doc = {
   _id: 'messages',

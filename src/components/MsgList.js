@@ -19,7 +19,7 @@ class MsgList extends Component {
     }
   }
   componentDidMount() {
-    fetch('http://139.199.188.225:3030/getlist', {
+    fetch('https://www.ericchoo.cn:3000/getlist', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ class MsgList extends Component {
   }
   handlePostComment = () => {
     /* istanbul ignore next */
-    fetch('http://139.199.188.225:3030/addcomment', {
+    fetch('https://www.ericchoo.cn:3000/addcomment', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
