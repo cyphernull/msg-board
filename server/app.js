@@ -26,7 +26,7 @@ app.use(
     extended: false
   })
 )
-app.use(express.static('../build'))
+app.use(express.static('./build'))
 const db = new PouchDB('https://www.ericchoo.cn:6984/msg')
 const doc = {
   _id: 'messages',
