@@ -11,7 +11,7 @@ const moment = require('moment')
 //   cert: fs.readFileSync(path.resolve('./server/localhost.cert'))
 // }
 const app = express()
-const port = 3000
+const port = 3030
 const server = app.listen(port, function() {
   console.log('Listening at', port)
 })
